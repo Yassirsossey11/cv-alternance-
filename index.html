@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolio — Mohamed Yassir Sossey</title>
+    <meta name="description" content="Portfolio professionnel — expériences, projets, compétences et contact.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <canvas id="stars-canvas" aria-hidden="true"></canvas>
+    <canvas id="mist-canvas" aria-hidden="true"></canvas>
+    <header class="site-header">
+        <a class="brand" href="#hero" aria-label="Aller à l'en-tête">MY</a>
+        <nav class="nav" aria-label="Navigation principale">
+            <button class="nav__toggle" aria-expanded="false" aria-controls="nav-list">Menu</button>
+            <ul id="nav-list" class="nav__list">
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#experience">Expérience</a></li>
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#skills">Compétences</a></li>
+                <li><a href="#education">Formation</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="theme-toggle" aria-label="Basculer le thème" title="Mode sombre">🌙</button>
+    </header>
+
+    <main>
+        <section id="hero" class="hero section">
+            <div class="container">
+                <div class="hero__content glass">
+                    <h1>Mohamed Yassir Sossey</h1>
+                    <p class="subtitle">Développeur Web Fullstack • Antibes, France</p>
+                    <div class="badge">Recherche d’alternance dès janvier 2026</div>
+                    <p>Développeur fullstack orienté résultats, à l'aise en HTML/CSS avec des notions en JavaScript, Python, C, React, Node.js et autres langages. Esprit analytique, rigueur et sens du service, avec des expériences variées en management, production et marketing digital.</p>
+                    <div class="hero__cta">
+                        <a class="btn primary" href="#projects">Voir mes projets</a>
+                        <a class="btn outline" id="cv-download" href="cv.pdf" target="_blank" rel="noopener"> Ouvrir mon CV (PDF) </a>
+                        <a class="btn outline" href="#contact">Me contacter</a>
+                    </div>
+                    <div class="socials">
+                        <a href="https://www.linkedin.com/in/mohamed-yassir-sossey" aria-label="LinkedIn" rel="noopener" target="_blank">LinkedIn</a>
+                        <a href="https://github.com/Yassirsossey11" aria-label="GitHub" rel="noopener" target="_blank">GitHub</a>
+                        <button id="copy-email" aria-label="Copier l'email">Email</button>
+                    </div>
+                </div>
+                <div class="hero__image tilt" data-tilt>
+                    <img src="photo.png" alt="Photo de profil" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container narrow glass">
+                <h2>À propos</h2>
+                <p>Étudiant en Architecture des Systèmes d’Information (Epitech, 2025–2028), je recherche des opportunités pour consolider mes compétences en développement web et en scripting. Je valorise la qualité, l’autonomie et l’apprentissage rapide, avec une vraie appétence pour les environnements exigeants.</p>
+                <p><strong>Objectif alternance :</strong> Je recherche un contrat d’apprentissage à partir de janvier 2026, sur 3 ans.</p>
+            </div>
+        </section>
+
+        <section id="experience" class="section alt">
+            <div class="container">
+                <h2>Expérience</h2>
+                <div class="timeline">
+                    <article class="card">
+                        <header class="card__header">
+                            <h3>Manager / Superviseur — JD SPORT</h3>
+                            <span class="meta">2025 • Nice</span>
+                        </header>
+                        <ul class="card__list">
+                            <li>Supervision et accompagnement des stockistes.</li>
+                            <li>Gestion des stocks et suivi des KPIs pour assurer la disponibilité produits.</li>
+                            <li>Management et formation des nouveaux collaborateurs.</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <header class="card__header">
+                            <h3>Assistant Marketing Web (Stage) — Dunes d’Or Voyages</h3>
+                            <span class="meta">Maroc</span>
+                        </header>
+                        <ul class="card__list">
+                            <li>Gestion et segmentation des bases de données clients.</li>
+                            <li>Suivi des KPIs, préparation des plans de communication selon briefs.</li>
+                            <li>Animation des réseaux sociaux et organisation d’événements.</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <header class="card__header">
+                            <h3>Agent de Production — Initial Textile</h3>
+                            <span class="meta">Nice</span>
+                        </header>
+                        <ul class="card__list">
+                            <li>Opérations répétitives sur ligne avec forte exigence de rigueur.</li>
+                            <li>Approvisionnement des postes en matières et composants.</li>
+                            <li>Contrôle qualité et emballage des produits finis.</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <header class="card__header">
+                            <h3>Stage d’observation — Ministère de la Justice</h3>
+                            <span class="meta">Maroc</span>
+                        </header>
+                        <ul class="card__list">
+                            <li>Organisation de fichiers et bases de données simples.</li>
+                            <li>Participation à la conception d’une application interne de suivi.</li>
+                            <li>Amélioration de la productivité et optimisation des procédures.</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2>Projets</h2>
+                <div class="grid projects">
+                    <article class="card tilt" data-tilt>
+                        <a href="https://pojet-port-de-nice-w2e8.vercel.app/" target="_blank" rel="noopener">
+                            <img src="assets/img/port-nice-screenshot.png.png" alt="Port de Nice - Gestion des bateaux" loading="lazy">
+                        </a>
+                        <div class="card__body">
+                            <h3>Port de Nice</h3>
+                            <p>Application web moderne (Next.js 14, TypeScript, Prisma) pour gérer les arrivées/départs de bateaux au Port de Nice. Interface intuitive avec tableau de bord interactif, filtrage intelligent, recherche avancée, drapeaux nationaux colorés, et export CSV. Déployée sur Vercel avec PostgreSQL.</p>
+                            <div class="card__actions">
+                                <a class="btn small" href="https://pojet-port-de-nice-w2e8.vercel.app/" target="_blank" rel="noopener">Voir le site</a>
+                                <a class="btn small outline" href="#" target="_blank" rel="noopener">Code</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card tilt" data-tilt>
+                        <a href="https://votre-portfolio.vercel.app" target="_blank" rel="noopener">
+                            <img src="assets/img/portfolio-screenshot.png" alt="Mon Portfolio" loading="lazy">
+                        </a>
+                        <div class="card__body">
+                            <h3>Mon Portfolio</h3>
+                            <p>Site portfolio responsive avec thèmes sombre/clair, animations d'étoiles et de forêt, effets 3D et formulaire de contact. Développé en HTML/CSS/JavaScript pur.</p>
+                            <div class="card__actions">
+                                <a class="btn small" href="https://votre-portfolio.vercel.app" target="_blank" rel="noopener">Voir le site</a>
+                                <a class="btn small outline" href="#" target="_blank" rel="noopener">Code</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section alt">
+            <div class="container">
+                <h2>Compétences</h2>
+                <ul class="tags">
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                    <li>Python</li>
+                    <li>C</li>
+                    <li>React</li>
+                    <li>Node.js</li>
+                    <li>R</li>
+                    <li>SQL</li>
+                    <li>Bash</li>
+                    <li>Illustrator</li>
+                    <li>Adobe XD</li>
+                    <li>Photoshop</li>
+                    <li>Agile</li>
+                    <li>Scrum</li>
+                    <li>Cycle en V</li>
+                    <li>Suite Microsoft</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="apprenticeship" class="section alt">
+            <div class="container narrow">
+                <h2>Alternance</h2>
+                <ul class="list">
+                    <li><strong>Pré MSc</strong> — 4 semaines en entreprise / 2 semaines à l’école (Epitech Nice)</li>
+                    <li><strong>MSc 1</strong> — 6 semaines en entreprise / 2 semaines à l’école (Epitech Nice)</li>
+                    <li><strong>MSc 2</strong> — 9 semaines en entreprise / 1 semaine à l’école (Epitech Nice)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <div class="container narrow glass">
+                <h2>Formation</h2>
+                <ul class="list">
+                    <li><strong>Architecte de Systèmes d’Information</strong> — Epitech, Nice (2025 – 2028)</li>
+                    <li><strong>DEUG Sciences Ingénierie Technologie – Informatique</strong> — Université Côte d’Azur, Nice (2024)</li>
+                    <li><strong>Prépa scientifique CPGE</strong> — ISEN, Toulon (2021)</li>
+                    <li><strong>Baccalauréat Scientifique — Spécialités Mathématiques & Physiques</strong> — Maroc (2020)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="section alt">
+            <div class="container narrow">
+                <h2>Contact</h2>
+                <p>Vous avez une opportunité ou une question ? Écrivez-moi directement :</p>
+                
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nom *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Sujet *</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">Envoyer le message</button>
+                    <div id="form-status" class="form-status"></div>
+                </form>
+                
+                <p style="margin-top: 24px; text-align: center;">
+                    <a class="btn outline" href="mailto:mohamed-yassir.sossey@epitech.eu">mohamed-yassir.sossey@epitech.eu</a>
+                    &nbsp;•&nbsp;
+                    <a class="btn outline" href="tel:+33760664225">07 60 66 42 25</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© <span id="year"></span> Mohamed Yassir Sossey — Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
+
+
