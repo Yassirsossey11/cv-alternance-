@@ -367,9 +367,19 @@
     updateParallax();
   })();
 
-  // Contact form handling
+  // Contact form handling with EmailJS
   const contactForm = document.getElementById('contact-form');
   const formStatus = document.getElementById('form-status');
+  
+  // EmailJS Configuration
+  const EMAILJS_CONFIG = {
+    publicKey: '9lJCpWDsiyxv5XdDv',      // Your EmailJS Public Key
+    serviceId: 'service_cjgkasc',        // Your EmailJS Service ID
+    templateId: 'template_303mi36'       // Your EmailJS Template ID
+  };
+  
+  // Initialize EmailJS
+  emailjs.init(EMAILJS_CONFIG.publicKey);
   
   if (contactForm && formStatus) {
     contactForm.addEventListener('submit', async (e) => {
@@ -395,7 +405,30 @@
       submitBtn.textContent = 'Envoi...';
       
       try {
-        // Create mailto link with form data
+        // Send email using EmailJS
+        const templateParams = {
+          from_name: name,
+          from_email: email,
+          subject: subject,
+          message: message,
+          to_email: 'mohamed-yassir.sossey@epitech.eu',
+          reply_to: email
+        };
+        
+        const result = await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, templateParams);
+        
+        if (result.status === 200) {
+          showFormStatus('Message envoyé avec succès ! Je vous répondrai rapidement.', 'success');
+          contactForm.reset();
+          return;
+        } else {
+          throw new Error('EmailJS send failed');
+        }
+        
+      } catch (error) {
+        console.error('EmailJS Error:', error);
+        
+        // Fallback: Create mailto link and show instructions
         const emailBody = `Bonjour Mohamed Yassir,
 
 Voici un nouveau message depuis votre portfolio :
@@ -412,19 +445,12 @@ Message envoyé depuis cv-alternance.vercel.app`;
 
         const mailtoUrl = `mailto:mohamed-yassir.sossey@epitech.eu?subject=${encodeURIComponent(`[Portfolio] ${subject}`)}&body=${encodeURIComponent(emailBody)}`;
         
-        // Try to open email client
-        window.location.href = mailtoUrl;
+        // Open email client
+        window.open(mailtoUrl, '_blank');
         
-        // Show success message
-        setTimeout(() => {
-          showFormStatus('Merci ! Une fenêtre email s\'est ouverte avec votre message pré-rempli.', 'success');
-          contactForm.reset();
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Envoyer le message';
-        }, 500);
-        
-      } catch (error) {
-        showFormStatus('Erreur lors de l\'envoi. Vous pouvez aussi m\'écrire directement à mohamed-yassir.sossey@epitech.eu', 'error');
+        showFormStatus('Message envoyé via votre client email. Merci de votre message !', 'success');
+        contactForm.reset();
+      } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Envoyer le message';
       }
