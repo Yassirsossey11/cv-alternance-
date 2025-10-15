@@ -366,6 +366,109 @@
     }, { passive: true });
     updateParallax();
   })();
+
+  // Contact form handling
+  const contactForm = document.getElementById('contact-form');
+  const formStatus = document.getElementById('form-status');
+  
+  if (contactForm && formStatus) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(contactForm);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const subject = formData.get('subject');
+      const message = formData.get('message');
+      
+      // Validate form
+      if (!name || !email || !subject || !message) {
+        showFormStatus('Veuillez remplir tous les champs requis.', 'error');
+        return;
+      }
+      
+      // Show loading state
+      showFormStatus('Envoi en cours...', 'loading');
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi...';
+      
+      try {
+        // Create mailto link with form data
+        const emailBody = `Bonjour Mohamed Yassir,
+
+Voici un nouveau message depuis votre portfolio :
+
+Nom: ${name}
+Email: ${email}
+Sujet: ${subject}
+
+Message:
+${message}
+
+---
+Message envoyé depuis cv-alternance.vercel.app`;
+
+        const mailtoUrl = `mailto:mohamed-yassir.sossey@epitech.eu?subject=${encodeURIComponent(`[Portfolio] ${subject}`)}&body=${encodeURIComponent(emailBody)}`;
+        
+        // Try to open email client
+        window.location.href = mailtoUrl;
+        
+        // Show success message
+        setTimeout(() => {
+          showFormStatus('Merci ! Une fenêtre email s\'est ouverte avec votre message pré-rempli.', 'success');
+          contactForm.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Envoyer le message';
+        }, 500);
+        
+      } catch (error) {
+        showFormStatus('Erreur lors de l\'envoi. Vous pouvez aussi m\'écrire directement à mohamed-yassir.sossey@epitech.eu', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Envoyer le message';
+      }
+    });
+    
+    function showFormStatus(message, type) {
+      formStatus.textContent = message;
+      formStatus.className = `form-status ${type}`;
+      
+      if (type === 'success' || type === 'error') {
+        setTimeout(() => {
+          formStatus.textContent = '';
+          formStatus.className = 'form-status';
+        }, 5000);
+      }
+    }
+  }
+
+  // Copy email functionality
+  const copyEmailBtn = document.getElementById('copy-email');
+  if (copyEmailBtn) {
+    copyEmailBtn.addEventListener('click', async () => {
+      const email = 'mohamed-yassir.sossey@epitech.eu';
+      try {
+        await navigator.clipboard.writeText(email);
+        copyEmailBtn.textContent = 'Email copié !';
+        setTimeout(() => {
+          copyEmailBtn.textContent = 'Email';
+        }, 2000);
+      } catch (err) {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = email;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        copyEmailBtn.textContent = 'Email copié !';
+        setTimeout(() => {
+          copyEmailBtn.textContent = 'Email';
+        }, 2000);
+      }
+    });
+  }
 })();
 
 
