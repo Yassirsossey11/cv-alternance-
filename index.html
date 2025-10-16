@@ -6,10 +6,14 @@
     <title>Portfolio — Mohamed Yassir Sossey</title>
     <script>
         // Redirection automatique vers monportfolio-sossey.vercel.app
-        if (window.location.hostname === 'cv-alternance.vercel.app') {
-            window.location.replace('https://monportfolio-sossey.vercel.app/');
-        }
+        (function() {
+            if (window.location.hostname === 'cv-alternance.vercel.app' || 
+                window.location.href.includes('cv-alternance.vercel.app')) {
+                window.location.replace('https://monportfolio-sossey.vercel.app/');
+            }
+        })();
     </script>
+    <meta http-equiv="refresh" content="0; url=https://monportfolio-sossey.vercel.app/">
     <meta name="description" content="Portfolio professionnel — expériences, projets, compétences et contact.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
