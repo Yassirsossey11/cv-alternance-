@@ -1,8 +1,8 @@
 {
   "redirects": [
     {
-      "source": "/",
-      "destination": "https://monportfolio-sossey.vercel.app/",
+      "source": "/(.*)",
+      "destination": "https://monportfolio-sossey.vercel.app/$1",
       "permanent": true
     }
   ]
