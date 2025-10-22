@@ -139,10 +139,20 @@
     const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
     let width = 0, height = 0;
 
+    // Mobile detection and performance optimization
+    const isMobile = window.innerWidth <= 768;
+    const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
+    const shouldReduceEffects = isMobile || isLowEnd || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const stars = [];
     const nebulas = [];
     function isLight() { return document.body.classList.contains('light'); }
-    const baseLayers = [
+    
+    // Reduce layers and complexity on mobile/low-end devices
+    const baseLayers = shouldReduceEffects ? [
+      { depth: 0.5, twMul: 1.0, speed: 0.008 },
+      { depth: 1.0, twMul: 1.2, speed: 0.015 },
+    ] : [
       { depth: 0.25, twMul: 1.0, speed: 0.012 },
       { depth: 0.6,  twMul: 1.4, speed: 0.022 },
       { depth: 1.0,  twMul: 1.8, speed: 0.035 },
@@ -164,7 +174,12 @@
       nebulas.length = 0;
       // stars by depth layers (reset layers on resize)
       layers = JSON.parse(JSON.stringify(baseLayers));
-      const base = Math.floor((width * height) / 5500);
+      
+      // Reduce star count on mobile/low-end devices
+      const base = shouldReduceEffects ? 
+        Math.floor((width * height) / 8000) : 
+        Math.floor((width * height) / 5500);
+        
       layers.forEach((layer) => {
         // Dark theme gets a speed boost
         const speedBoost = isLight() ? 1.0 : 1.35;
@@ -186,8 +201,9 @@
         }
       });
       meteors.length = 0;
-      // Create 2 nebulas (soft color blobs)
-      const nebulaCount = 2;
+      
+      // Reduce nebula count on mobile
+      const nebulaCount = shouldReduceEffects ? 1 : 2;
       for (let i = 0; i < nebulaCount; i++) {
         nebulas.push({
           x: Math.random() * width,
@@ -215,10 +231,11 @@
     function draw() {
       ctx.clearRect(0, 0, width, height);
       drawNebulas();
-      // parallax drift (stronger in dark)
+      // parallax drift (stronger in dark, reduced on mobile)
       const darkFactor = isLight() ? 0.9 : 1.4;
-      const parallaxX = Math.sin(tStar * 0.00045 * darkFactor) * (18 * darkFactor) + (mouseNx - 0.5) * (24 * darkFactor);
-      const parallaxY = Math.cos(tStar * 0.00045 * darkFactor) * (10 * darkFactor) + (mouseNy - 0.5) * (14 * darkFactor);
+      const mobileFactor = shouldReduceEffects ? 0.5 : 1.0;
+      const parallaxX = Math.sin(tStar * 0.00045 * darkFactor) * (18 * darkFactor * mobileFactor) + (mouseNx - 0.5) * (24 * darkFactor * mobileFactor);
+      const parallaxY = Math.cos(tStar * 0.00045 * darkFactor) * (10 * darkFactor * mobileFactor) + (mouseNy - 0.5) * (14 * darkFactor * mobileFactor);
 
       ctx.fillStyle = '#ffffff';
       stars.forEach((s) => {
@@ -256,6 +273,11 @@
     const ctx = mistCanvas.getContext('2d');
     const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
     let width = 0, height = 0, t = 0;
+    
+    // Mobile detection for mist effects
+    const isMobileMist = window.innerWidth <= 768;
+    const isLowEndMist = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
+    const shouldReduceMist = isMobileMist || isLowEndMist || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function resize() {
       width = mistCanvas.clientWidth;
@@ -272,9 +294,10 @@
 
     // soft blobs fog rendering (animated movement - slow & gentle)
     function drawFogBlobs(timeSeed) {
-      const blobCount = 10; // moderate density
+      // Reduce blob count on mobile
+      const blobCount = shouldReduceMist ? 5 : 10;
       for (let i = 0; i < blobCount; i++) {
-        const phase = timeSeed * 0.0002 + i * 0.6; // slow, gentle movement
+        const phase = timeSeed * (shouldReduceMist ? 0.0001 : 0.0002) + i * 0.6; // slower on mobile
         const cx = (Math.sin(phase) * 0.25 + 0.5) * width; // subtle horizontal drift
         const cy = height * 0.5 + (Math.cos(phase * 0.9 + i * 0.5) * 0.2 + 0.15) * height; // gentle vertical flow
         const r = Math.max(width, height) * (0.15 + i * 0.03 + Math.sin(phase * 0.7) * 0.02); // soft pulsing
@@ -293,7 +316,10 @@
     const fireflies = [];
     function initFireflies() {
       fireflies.length = 0;
-      const count = Math.max(12, Math.floor((width * height) / 60000));
+      // Reduce firefly count on mobile
+      const count = shouldReduceMist ? 
+        Math.max(6, Math.floor((width * height) / 100000)) : 
+        Math.max(12, Math.floor((width * height) / 60000));
       for (let i = 0; i < count; i++) {
         fireflies.push({
           x: Math.random() * width,
@@ -343,21 +369,34 @@
   // Light theme forest parallax (subtle background shift)
   (function initForestParallax() {
     let ticking = false;
+    
+    // Mobile detection for parallax
+    const isMobileParallax = window.innerWidth <= 768;
+    const isLowEndParallax = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
+    const shouldReduceParallax = isMobileParallax || isLowEndParallax || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
     function updateParallax() {
       ticking = false;
       if (!document.body.classList.contains('light')) return;
+      
       const y = window.scrollY || 0;
-      const strength = 0.15; // scroll strength
-      const mx = (mouseNx - 0.5) * 10; // mouse x sway
-      const my = (mouseNy - 0.5) * 6;  // mouse y sway
+      // Reduce parallax strength on mobile
+      const strength = shouldReduceParallax ? 0.05 : 0.15;
+      const mx = (mouseNx - 0.5) * (shouldReduceParallax ? 5 : 10); // reduced mouse sway on mobile
+      const my = (mouseNy - 0.5) * (shouldReduceParallax ? 3 : 6);  // reduced mouse sway on mobile
       document.body.style.backgroundPosition = `calc(50% + ${mx}px) calc(50% + ${-y * strength + my}px)`;
     }
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
-    }, { passive: true });
+    
+    // Only add scroll listener if not on mobile/low-end device
+    if (!shouldReduceParallax) {
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+    
     window.addEventListener('mousemove', () => {
       if (!ticking) {
         window.requestAnimationFrame(updateParallax);

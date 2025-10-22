@@ -43,10 +43,28 @@ body {
 }
 
 /* Fullscreen stars canvas */
-#stars-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; display: block; }
+#stars-canvas { 
+  position: fixed; 
+  inset: 0; 
+  width: 100vw; 
+  height: 100vh; 
+  z-index: -1; 
+  display: block;
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
 .light #stars-canvas { display: none; }
 
-#mist-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; display: none; }
+#mist-canvas { 
+  position: fixed; 
+  inset: 0; 
+  width: 100vw; 
+  height: 100vh; 
+  z-index: -1; 
+  display: none;
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
 .light #mist-canvas { display: block; }
 
 img { max-width: 100%; display: block; }
@@ -204,6 +222,24 @@ p { color: var(--text); opacity: 0.95; margin: 0 0 16px; }
   .nav__list { position: absolute; top: 58px; right: 12px; flex-direction: column; gap: 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 6px; display: none; }
   .nav__list.is-open { display: flex; }
   .nav__list a { padding: 10px 12px; border-radius: 8px; }
+  
+  /* Mobile optimizations for canvas effects */
+  #stars-canvas, #mist-canvas {
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Very small screens - further reduce effects */
+@media (max-width: 480px) {
+  .hero__image img { width: 200px; height: 200px; }
+  
+  /* Disable complex animations on very small screens */
+  .tilt:hover { 
+    box-shadow: var(--shadow); 
+    transform: none;
+  }
 }
 
 /* Reduced motion */
