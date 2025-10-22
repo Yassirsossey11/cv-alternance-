@@ -256,8 +256,38 @@
         if (s.y > height + 2) s.y = -2;
       });
 
-      // meteors disabled (remove trails)
-      meteors.length = 0;
+      // meteors (shooting stars) - reduced on mobile
+      meteors.forEach((m) => {
+        if (m.life > 0) {
+          ctx.strokeStyle = `rgba(255, 255, 255, ${m.life})`;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(m.x, m.y);
+          ctx.lineTo(m.x - m.vx * 20, m.y - m.vy * 20);
+          ctx.stroke();
+          m.x += m.vx;
+          m.y += m.vy;
+          m.life -= 0.01;
+        }
+      });
+      
+      // Add new meteors occasionally (less frequent on mobile)
+      if (Math.random() < (shouldReduceEffects ? 0.0008 : 0.002)) {
+        meteors.push({
+          x: Math.random() * width,
+          y: Math.random() * height * 0.3,
+          vx: (Math.random() - 0.5) * 8,
+          vy: Math.random() * 3 + 2,
+          life: 1
+        });
+      }
+      
+      // Remove dead meteors
+      for (let i = meteors.length - 1; i >= 0; i--) {
+        if (meteors[i].life <= 0) {
+          meteors.splice(i, 1);
+        }
+      }
 
       tStar += 16;
       requestAnimationFrame(draw);
@@ -380,22 +410,20 @@
       if (!document.body.classList.contains('light')) return;
       
       const y = window.scrollY || 0;
-      // Reduce parallax strength on mobile
-      const strength = shouldReduceParallax ? 0.05 : 0.15;
-      const mx = (mouseNx - 0.5) * (shouldReduceParallax ? 5 : 10); // reduced mouse sway on mobile
-      const my = (mouseNy - 0.5) * (shouldReduceParallax ? 3 : 6);  // reduced mouse sway on mobile
+      // Keep some parallax on mobile for better forest visibility
+      const strength = shouldReduceParallax ? 0.08 : 0.15;
+      const mx = (mouseNx - 0.5) * (shouldReduceParallax ? 8 : 10); // slightly more mouse sway on mobile
+      const my = (mouseNy - 0.5) * (shouldReduceParallax ? 5 : 6);  // slightly more mouse sway on mobile
       document.body.style.backgroundPosition = `calc(50% + ${mx}px) calc(50% + ${-y * strength + my}px)`;
     }
     
-    // Only add scroll listener if not on mobile/low-end device
-    if (!shouldReduceParallax) {
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          window.requestAnimationFrame(updateParallax);
-          ticking = true;
-        }
-      }, { passive: true });
-    }
+    // Add scroll listener for all devices (with reduced intensity on mobile)
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, { passive: true });
     
     window.addEventListener('mousemove', () => {
       if (!ticking) {
