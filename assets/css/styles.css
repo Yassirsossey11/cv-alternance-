@@ -37,21 +37,24 @@ body {
 
 .light body, body.light {
   background:
-    linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15)),
+    linear-gradient(0deg, rgba(0,0,0,0.1), rgba(0,0,0,0.05)),
+    linear-gradient(45deg, rgba(34, 139, 34, 0.1), rgba(0, 100, 0, 0.05)),
     url('../img/forest.png') center / cover no-repeat fixed,
-    var(--bg);
+    linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 50%, #f0f8f0 100%);
 }
 
 /* Mobile forest visibility improvement */
 @media (max-width: 768px) {
   .light body, body.light {
     background:
-      linear-gradient(0deg, rgba(0,0,0,0.08), rgba(0,0,0,0.08)),
+      linear-gradient(0deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02)),
+      linear-gradient(30deg, rgba(34, 139, 34, 0.15), rgba(0, 100, 0, 0.08)),
+      linear-gradient(120deg, rgba(50, 205, 50, 0.1), rgba(144, 238, 144, 0.05)),
       url('../img/forest.png') center / cover no-repeat fixed,
-      var(--bg);
+      linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 30%, #f0fff0 70%, #f0f8f0 100%);
   }
   
-  /* Mobile forest animations - simplified for better performance */
+  /* Mobile forest animations - more butterflies and flowers */
   .light body::before, body.light::before {
     content: '';
     position: fixed;
@@ -62,26 +65,115 @@ body {
     pointer-events: none;
     z-index: -1;
     background-image: 
-      /* Simple floating elements */
-      radial-gradient(2px 2px at 20px 30px, #ff6b9d, transparent),
-      radial-gradient(2px 2px at 60px 70px, #ffd93d, transparent),
-      radial-gradient(1px 1px at 100px 40px, #6bcf7f, transparent),
-      radial-gradient(2px 2px at 140px 80px, #ff9a56, transparent),
-      radial-gradient(1px 1px at 180px 30px, #c44569, transparent);
-    background-size: 200px 150px, 180px 130px, 160px 110px, 140px 90px, 120px 70px;
-    animation: simpleFloat 6s ease-in-out infinite;
+      /* Butterflies - more variety */
+      radial-gradient(ellipse 3px 1.5px at 20px 30px, #ff6b9d, transparent),
+      radial-gradient(ellipse 2px 1px at 50px 70px, #ffd93d, transparent),
+      radial-gradient(ellipse 2.5px 1.2px at 80px 40px, #6bcf7f, transparent),
+      radial-gradient(ellipse 3px 1.5px at 120px 80px, #ff9a56, transparent),
+      radial-gradient(ellipse 2px 1px at 160px 30px, #c44569, transparent),
+      radial-gradient(ellipse 2.5px 1.2px at 200px 60px, #a8e6cf, transparent),
+      radial-gradient(ellipse 3px 1.5px at 30px 120px, #ff8a80, transparent),
+      radial-gradient(ellipse 2px 1px at 70px 150px, #ffb74d, transparent),
+      radial-gradient(ellipse 2.5px 1.2px at 110px 20px, #e1bee7, transparent),
+      radial-gradient(ellipse 3px 1.5px at 150px 100px, #f8bbd9, transparent),
+      /* Falling flowers - more variety */
+      radial-gradient(ellipse 4px 2px at 10px 20px, #ffb3ba, transparent),
+      radial-gradient(ellipse 3px 1.5px at 40px 50px, #ffdfba, transparent),
+      radial-gradient(ellipse 5px 2.5px at 70px 80px, #ffffba, transparent),
+      radial-gradient(ellipse 4px 2px at 100px 30px, #baffc9, transparent),
+      radial-gradient(ellipse 3px 1.5px at 130px 60px, #bae1ff, transparent),
+      radial-gradient(ellipse 5px 2.5px at 160px 90px, #ffc1cc, transparent),
+      radial-gradient(ellipse 4px 2px at 190px 40px, #e1bee7, transparent),
+      radial-gradient(ellipse 3px 1.5px at 25px 110px, #f8bbd9, transparent),
+      radial-gradient(ellipse 5px 2.5px at 55px 140px, #c8e6c9, transparent),
+      radial-gradient(ellipse 4px 2px at 85px 10px, #dcedc8, transparent);
+    background-size: 150px 120px, 130px 100px, 110px 80px, 90px 60px, 70px 40px,
+                     120px 100px, 100px 80px, 80px 60px, 60px 40px, 40px 20px,
+                     100px 80px, 80px 60px, 60px 40px, 40px 20px, 30px 15px,
+                     90px 70px, 70px 50px, 50px 30px, 30px 15px, 20px 10px;
+    animation: butterflyFloat 8s ease-in-out infinite;
+  }
+  
+  /* Additional layer of animations */
+  .light body::after, body.light::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    background-image: 
+      /* More butterflies at different positions */
+      radial-gradient(ellipse 2px 1px at 35px 45px, #ff6b9d, transparent),
+      radial-gradient(ellipse 3px 1.5px at 75px 95px, #ffd93d, transparent),
+      radial-gradient(ellipse 2.5px 1.2px at 115px 55px, #6bcf7f, transparent),
+      radial-gradient(ellipse 2px 1px at 155px 105px, #ff9a56, transparent),
+      radial-gradient(ellipse 3px 1.5px at 195px 45px, #c44569, transparent),
+      radial-gradient(ellipse 2.5px 1.2px at 15px 135px, #a8e6cf, transparent),
+      radial-gradient(ellipse 2px 1px at 55px 25px, #ff8a80, transparent),
+      radial-gradient(ellipse 3px 1.5px at 95px 175px, #ffb74d, transparent),
+      /* More falling flowers */
+      radial-gradient(ellipse 4px 2px at 45px 35px, #ffb3ba, transparent),
+      radial-gradient(ellipse 3px 1.5px at 85px 65px, #ffdfba, transparent),
+      radial-gradient(ellipse 5px 2.5px at 125px 95px, #ffffba, transparent),
+      radial-gradient(ellipse 4px 2px at 165px 45px, #baffc9, transparent),
+      radial-gradient(ellipse 3px 1.5px at 5px 75px, #bae1ff, transparent),
+      radial-gradient(ellipse 5px 2.5px at 145px 125px, #ffc1cc, transparent);
+    background-size: 140px 110px, 120px 90px, 100px 70px, 80px 50px, 60px 30px,
+                     100px 80px, 80px 60px, 60px 40px, 40px 20px, 30px 15px,
+                     90px 70px, 70px 50px, 50px 30px, 30px 15px, 20px 10px,
+                     80px 60px, 60px 40px, 40px 20px, 30px 15px, 20px 10px;
+    animation: flowerFall 12s linear infinite;
+    animation-delay: 3s;
   }
 }
 
-/* Simple floating animation for mobile */
-@keyframes simpleFloat {
-  0%, 100% { 
-    transform: translateY(0px) translateX(0px);
-    opacity: 0.7;
+/* Butterfly floating animation for mobile */
+@keyframes butterflyFloat {
+  0% { 
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  25% { 
+    transform: translateY(-15px) translateX(8px) rotate(2deg);
+    opacity: 0.9;
   }
   50% { 
-    transform: translateY(-20px) translateX(10px);
+    transform: translateY(-25px) translateX(-5px) rotate(-1deg);
     opacity: 1;
+  }
+  75% { 
+    transform: translateY(-10px) translateX(12px) rotate(1deg);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+}
+
+/* Flower falling animation for mobile */
+@keyframes flowerFall {
+  0% { 
+    transform: translateY(-100vh) translateX(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% { 
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translateY(-50vh) translateX(10px) rotate(180deg);
+    opacity: 1;
+  }
+  90% { 
+    transform: translateY(10vh) translateX(-5px) rotate(360deg);
+    opacity: 0.6;
+  }
+  100% { 
+    transform: translateY(100vh) translateX(0px) rotate(360deg);
+    opacity: 0;
   }
 }
 
@@ -282,12 +374,24 @@ p { color: var(--text); opacity: 0.95; margin: 0 0 16px; }
     min-height: 180px;
     background: var(--card);
     border-radius: 8px 8px 0 0;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   .card a {
     display: block;
     position: relative;
-    z-index: 2;
+    z-index: 10;
+  }
+  
+  /* Ensure hero image is visible on mobile */
+  .hero__image img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 10;
+    position: relative;
   }
 }
 
